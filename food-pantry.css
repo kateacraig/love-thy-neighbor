@@ -577,6 +577,20 @@ footer {
 }
 
 /* Responsive */
+@media (max-width: 968px) {
+  nav ul {
+    display: none;
+  }
+
+  .logo-text {
+    display: none;
+  }
+
+  nav .mobile-menu-toggle {
+    display: flex;
+  }
+}
+
 @media (max-width: 768px) {
   nav ul {
     flex-direction: column;
