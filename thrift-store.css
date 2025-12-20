@@ -355,6 +355,7 @@ nav a:hover {
   background: white;
   padding: 1.5rem;
   border-radius: 10px;
+  text-align: center;
 }
 
 .location-box h4 {
