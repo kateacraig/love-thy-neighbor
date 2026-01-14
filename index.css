@@ -358,6 +358,12 @@ nav a:hover {
   padding: 1.5rem;
 }
 
+.news-story-image {
+  width: 320px;
+  height: 100%;
+  padding-top: 22px;
+}
+
 .news-date {
   color: #999;
   font-size: 0.9rem;

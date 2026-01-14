@@ -260,6 +260,7 @@ nav a:hover {
 .donate-section {
   padding: 4rem 2rem;
   background: white;
+  margin-bottom: -300px;
 }
 
 .donate-methods {
@@ -301,85 +302,6 @@ nav a:hover {
 .btn:hover {
   background: #a82828;
   transform: translateY(-2px);
-}
-
-/* Social Media */
-.social-section {
-  padding: 4rem 2rem;
-  background: #fff0f5;
-  text-align: center;
-  margin-top: -365px;
-}
-
-.social-links-section {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin-top: 2rem;
-  flex-wrap: wrap;
-}
-
-.social-link-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-decoration: none;
-  color: #333;
-  transition: transform 0.3s;
-}
-
-.social-link-section p {
-  text-align: center;
-}
-
-.social-link-section span {
-  width: 20px;
-  text-align: center;
-  font-size: 16px;
-  font-weight: 600;
-  color: #c93030;
-  padding: 0;
-}
-
-.social-link-section:hover {
-  transform: translateY(-5px);
-}
-
-.social-link-icon {
-  width: 80px;
-  height: 80px;
-  background: #d85b7f;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2.5rem;
-  color: white;
-  margin-bottom: 0.5rem;
-}
-
-.social-link-icon.facebook {
-  font-size: 40px;
-  padding-left: 1px;
-  padding-top: 3px;
-  font-weight: 800;
-}
-
-.social-link-icon.camera {
-  font-size: 40px;
-  padding-left: 1px;
-  padding-top: -3px;
-  font-weight: 800;
-}
-
-.social-links-section p {
-  width: 20px;
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  font-size: 16px;
-  font-weight: 600;
-  color: #c93030;
 }
 
 /* Footer */
