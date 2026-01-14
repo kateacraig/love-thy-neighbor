@@ -359,9 +359,14 @@ nav a:hover {
 }
 
 .news-story-image {
-  width: 320px;
+  width: 330px;
   height: 100%;
   padding-top: 22px;
+  padding: 40px 10px 10px 0;
+}
+
+.news-card:hover {
+  transform: scale(1.1);
 }
 
 .news-date {
