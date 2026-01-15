@@ -154,14 +154,15 @@ nav a:hover {
 /* Partners Grid */
 .partners-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(150px, 2fr));
-  grid-template-rows: repeat(4, minmax(150px, 2fr));
+  grid-template-columns: repeat(3, minmax(250px, 2fr));
+  grid-template-rows: repeat(3, minmax(250px, 2fr));
   gap: 3rem;
   margin-top: 3rem;
 }
 
 .thank-you {
-  max-height: 700px;
+  margin-top: -20px;
+  max-height: 1100px;
 }
 
 .partner-card {
@@ -201,6 +202,7 @@ nav a:hover {
 .benefits {
   padding: 4rem 2rem;
   background: #fff0f5;
+  margin-top: 50px;
 }
 
 .benefits-grid {
