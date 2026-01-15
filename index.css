@@ -41,6 +41,9 @@ nav {
 .logo-text {
   font-family: "Pacifico", cursive;
   font-size: 1.5rem;
+}
+
+.logo-text a {
   color: #d85b7f;
 }
 

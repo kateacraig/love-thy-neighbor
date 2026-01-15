@@ -41,6 +41,9 @@ nav {
 .logo-text {
   font-family: "Pacifico", cursive;
   font-size: 1.5rem;
+}
+
+.logo-text a {
   color: #d85b7f;
 }
 
@@ -259,6 +262,11 @@ nav a:hover {
   text-align: right;
 }
 
+.timeline-item:nth-child(odd) .timeline-year {
+  grid-column: 1;
+  text-align: right;
+}
+
 .timeline-year {
   font-size: 2rem;
   font-weight: 700;
@@ -299,7 +307,7 @@ nav a:hover {
 
 .board-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 2rem;
   margin-top: 2rem;
 }
