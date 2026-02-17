@@ -23,105 +23,182 @@ document.addEventListener("click", (e) => {
   }
 });
 
-// Carousel functionality
-let currentSlideIndex = 0;
-const slides = document.querySelectorAll(".carousel-slide");
-const indicators = document.querySelectorAll(".carousel-indicator");
-const slidesContainer = document.getElementById("carouselSlides");
-let autoSlideInterval;
+// ==========================================
+// PROJECTS CAROUSEL - Arrows, slides 1.5 images, pause on hover
+// ==========================================
+const projectsCarousel = document.querySelector(".projects-carousel");
+const projectsCarouselSlides = document.getElementById(
+  "projectsCarouselSlides"
+);
+const projectsSlides = projectsCarousel
+  ? projectsCarousel.querySelectorAll(".carousel-slide")
+  : [];
 
-// Show specific slide
-function showSlide(index) {
-  // Wrap around if index is out of bounds
-  if (index >= slides.length) {
-    currentSlideIndex = 0;
-  } else if (index < 0) {
-    currentSlideIndex = slides.length - 1;
-  } else {
-    currentSlideIndex = index;
-  }
+if (projectsCarousel && projectsCarouselSlides && projectsSlides.length > 0) {
+  let projectsCurrentIndex = 0;
+  let projectsSlidesToShow = getProjectsSlidesToShow();
+  let projectsIsTransitioning = false;
+  let projectsAutoAdvanceInterval;
+  let projectsIsPaused = false;
 
-  // Move slides
-  const offset = -currentSlideIndex * 100;
-  slidesContainer.style.transform = `translateX(${offset}%)`;
+  // Clone slides for infinite loop
+  function setupProjectsInfiniteLoop() {
+    const existingClones = projectsCarouselSlides.querySelectorAll(".clone");
+    existingClones.forEach((clone) => clone.remove());
 
-  // Update indicators
-  indicators.forEach((indicator, i) => {
-    indicator.classList.remove("active");
-    if (i === currentSlideIndex) {
-      indicator.classList.add("active");
+    // For 1.5 slides, we need more clones to make the loop smooth
+    const cloneCount = Math.ceil(projectsSlidesToShow * 2);
+
+    // Clone first set of slides and append to end
+    for (let i = 0; i < cloneCount; i++) {
+      const clone = projectsSlides[i % projectsSlides.length].cloneNode(true);
+      clone.classList.add("clone");
+      projectsCarouselSlides.appendChild(clone);
     }
+
+    // Clone last set of slides and prepend to beginning
+    for (
+      let i = projectsSlides.length - cloneCount;
+      i < projectsSlides.length;
+      i++
+    ) {
+      const actualIndex = (i + projectsSlides.length) % projectsSlides.length;
+      const clone = projectsSlides[actualIndex].cloneNode(true);
+      clone.classList.add("clone");
+      projectsCarouselSlides.insertBefore(
+        clone,
+        projectsCarouselSlides.firstChild
+      );
+    }
+
+    projectsCurrentIndex = cloneCount;
+    updateProjectsCarouselPosition(false);
+  }
+
+  // Determine how many slides to show
+  function getProjectsSlidesToShow() {
+    if (window.innerWidth <= 460) {
+      return 1;
+    } else {
+      return 3; // Still show 3 on desktop, but will move by 1.5
+    }
+  }
+
+  // Update carousel position
+  function updateProjectsCarouselPosition(animate = true) {
+    const slideWidth = 100 / projectsSlidesToShow;
+    const offset = -projectsCurrentIndex * slideWidth;
+
+    if (animate) {
+      projectsCarouselSlides.style.transition = "transform 1s ease-in-out";
+    } else {
+      projectsCarouselSlides.style.transition = "none";
+    }
+
+    projectsCarouselSlides.style.transform = `translateX(${offset}%)`;
+  }
+
+  // Move by 1 slide on both desktop and mobile
+  function projectsNextSlide() {
+    if (projectsIsTransitioning || projectsIsPaused) return;
+
+    projectsIsTransitioning = true;
+    // Move by 1 slide
+    projectsCurrentIndex += 1;
+    updateProjectsCarouselPosition(true);
+
+    setTimeout(() => {
+      // Check if we've gone past the real slides
+      if (
+        projectsCurrentIndex >=
+        projectsSlides.length + Math.ceil(projectsSlidesToShow * 2)
+      ) {
+        projectsCurrentIndex = Math.ceil(projectsSlidesToShow * 2);
+        updateProjectsCarouselPosition(false);
+      }
+      projectsIsTransitioning = false;
+    }, 1000);
+  }
+
+  function projectsPrevSlide() {
+    if (projectsIsTransitioning || projectsIsPaused) return;
+
+    projectsIsTransitioning = true;
+    // Move by 1 slide
+    projectsCurrentIndex -= 1;
+    updateProjectsCarouselPosition(true);
+
+    setTimeout(() => {
+      if (projectsCurrentIndex < Math.ceil(projectsSlidesToShow * 2)) {
+        projectsCurrentIndex = projectsSlides.length;
+        updateProjectsCarouselPosition(false);
+      }
+      projectsIsTransitioning = false;
+    }, 1000);
+  }
+
+  // Reset auto-advance interval
+  function resetProjectsAutoAdvance() {
+    clearInterval(projectsAutoAdvanceInterval);
+    projectsAutoAdvanceInterval = setInterval(projectsNextSlide, 5000);
+  }
+
+  // Handle window resize
+  let projectsResizeTimeout;
+  window.addEventListener("resize", function () {
+    clearTimeout(projectsResizeTimeout);
+    projectsResizeTimeout = setTimeout(() => {
+      const newSlidesToShow = getProjectsSlidesToShow();
+      if (newSlidesToShow !== projectsSlidesToShow) {
+        projectsSlidesToShow = newSlidesToShow;
+        setupProjectsInfiniteLoop();
+      }
+    }, 250);
   });
-}
 
-// Move to next/previous slide
-function moveSlide(direction) {
-  showSlide(currentSlideIndex + direction);
-  resetAutoSlide();
-}
+  // Initialize
+  setupProjectsInfiniteLoop();
 
-// Jump to specific slide
-function currentSlide(index) {
-  showSlide(index);
-  resetAutoSlide();
-}
+  // Create navigation arrows
+  const prevArrow = document.createElement("button");
+  prevArrow.className = "carousel-arrow prev";
+  prevArrow.innerHTML = "&#8249;";
+  prevArrow.setAttribute("aria-label", "Previous slide");
 
-// Auto-advance slides
-function startAutoSlide() {
-  autoSlideInterval = setInterval(() => {
-    showSlide(currentSlideIndex + 1);
-  }, 5000); // Change slide every 5 seconds
-}
+  const nextArrow = document.createElement("button");
+  nextArrow.className = "carousel-arrow next";
+  nextArrow.innerHTML = "&#8250;";
+  nextArrow.setAttribute("aria-label", "Next slide");
 
-// Reset auto-slide timer when user interacts
-function resetAutoSlide() {
-  clearInterval(autoSlideInterval);
-  startAutoSlide();
-}
+  projectsCarousel.appendChild(prevArrow);
+  projectsCarousel.appendChild(nextArrow);
 
-// Initialize carousel
-showSlide(0);
-startAutoSlide();
+  // Arrow click handlers
+  prevArrow.addEventListener("click", function () {
+    projectsIsPaused = false; // Temporarily unpause
+    projectsPrevSlide();
+    resetProjectsAutoAdvance();
+    projectsIsPaused = true; // Re-pause since we're still hovering
+  });
 
-// Pause auto-slide when user hovers over carousel
-const carousel = document.querySelector(".carousel");
-carousel.addEventListener("mouseenter", () => {
-  clearInterval(autoSlideInterval);
-});
+  nextArrow.addEventListener("click", function () {
+    projectsIsPaused = false; // Temporarily unpause
+    projectsNextSlide();
+    resetProjectsAutoAdvance();
+    projectsIsPaused = true; // Re-pause since we're still hovering
+  });
 
-carousel.addEventListener("mouseleave", () => {
-  startAutoSlide();
-});
+  // Pause on hover - for the entire carousel
+  projectsCarousel.addEventListener("mouseenter", function () {
+    projectsIsPaused = true;
+    clearInterval(projectsAutoAdvanceInterval);
+  });
 
-// Keyboard navigation
-document.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowLeft") {
-    moveSlide(-1);
-  } else if (e.key === "ArrowRight") {
-    moveSlide(1);
-  }
-});
+  projectsCarousel.addEventListener("mouseleave", function () {
+    projectsIsPaused = false;
+    resetProjectsAutoAdvance();
+  });
 
-// Touch/swipe support for mobile
-let touchStartX = 0;
-let touchEndX = 0;
-
-carousel.addEventListener("touchstart", (e) => {
-  touchStartX = e.changedTouches[0].screenX;
-});
-
-carousel.addEventListener("touchend", (e) => {
-  touchEndX = e.changedTouches[0].screenX;
-  handleSwipe();
-});
-
-function handleSwipe() {
-  if (touchEndX < touchStartX - 50) {
-    // Swipe left - next slide
-    moveSlide(1);
-  }
-  if (touchEndX > touchStartX + 50) {
-    // Swipe right - previous slide
-    moveSlide(-1);
-  }
+  // Start auto-advance
+  projectsAutoAdvanceInterval = setInterval(projectsNextSlide, 5000);
 }

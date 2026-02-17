@@ -151,7 +151,7 @@ nav a:hover {
 /* Info Grid */
 .info-section {
   padding: 2rem 2rem;
-  background: white;
+  background: #fff0f5;
 }
 
 .info-grid {
@@ -221,7 +221,7 @@ nav a:hover {
 /* How It Works */
 .how-it-works {
   padding: 4rem 2rem;
-  background: #fff0f5;
+  background: #fffff;
 }
 
 .section-title {
@@ -476,136 +476,107 @@ footer {
   background: #c93030;
 }
 
-/* Image Carousel */
-.carousel-section {
-  padding: 0;
-  background: white;
-  overflow: hidden;
-}
+/* ==========================================
+   CAROUSEL BASE STYLES (Both Carousels)
+   ========================================== */
 
-.carousel-container {
-  position: relative;
-  max-width: 1200px;
-  max-height: 400px;
-  margin: 0 auto;
-  padding: 0 2rem;
+/* Carousel Container */
+.carousel-section {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
 }
 
 .carousel {
-  position: relative;
   width: 100%;
-  height: 400px;
   overflow: hidden;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  position: relative;
+  border: 5px solid white;
+  box-sizing: border-box;
+  border-radius: 10px;
+  border: 5px solid #c93030;
 }
 
+.about-carousel {
+  margin-top: 40px;
+}
+
+/* Carousel Slides Wrapper */
 .carousel-slides {
   display: flex;
-  transition: transform 0.5s ease-in-out;
-  height: 100%;
+  transition: transform 1s ease-in-out;
+  will-change: transform;
 }
 
+/* Individual Slide */
 .carousel-slide {
-  min-width: 100%;
-  height: 100%;
+  flex: 0 0 33.3%;
+  min-width: 33.3%;
+  box-sizing: border-box;
+  border: none;
+}
+
+/* Placeholder Styling */
+.carousel-placeholder {
+  width: 100%;
   position: relative;
 }
 
-.carousel-slide img {
+.carousel-placeholder-icon {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Placeholder styling for demo images */
-.carousel-placeholder {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, #d85b7f 0%, #c93030 100%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: white;
+  aspect-ratio: 16 / 13;
+  overflow: hidden;
 }
 
 .carousel-placeholder-icon img {
-  width: 600px;
-  height: 300px;
-  font-size: 5rem;
-  margin-bottom: 1rem;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
 }
 
 .carousel-placeholder-text {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-top: -20px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #d85b7f;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  font-size: 14px;
 }
 
-/* Carousel Controls */
-.carousel-btn {
+/* ==========================================
+   PROJECTS CAROUSEL - With Arrows & Hover Effects
+   ========================================== */
+
+/* Navigation Arrows (ONLY for projects carousel) */
+.projects-carousel .carousel-arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.9);
-  color: #c93030;
+  background: #d85b7f;
   border: none;
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  font-size: 1.5rem;
   cursor: pointer;
-  transition: all 0.3s;
   z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 24px;
+  color: #ffffff;
+  transition: background 0.3s ease;
 }
 
-.carousel-btn:hover {
-  background: white;
-  transform: translateY(-50%) scale(1.1);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+.projects-carousel .carousel-arrow.prev {
+  left: 15px;
 }
 
-.carousel-btn-prev {
-  left: 20px;
-}
-
-.carousel-btn-next {
-  right: 20px;
-}
-
-/* Carousel Indicators */
-.carousel-indicators {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 10px;
-  z-index: 10;
-}
-
-.carousel-indicator {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.5);
-  border: 2px solid white;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.carousel-indicator.active {
-  background: white;
-  width: 40px;
-  border-radius: 6px;
-}
-
-.carousel-indicator:hover {
-  background: rgba(255, 255, 255, 0.8);
+.projects-carousel .carousel-arrow.next {
+  right: 15px;
 }
 
 /* Responsive */
