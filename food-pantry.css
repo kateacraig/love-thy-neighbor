@@ -509,8 +509,8 @@ footer {
 
 /* Individual Slide */
 .carousel-slide {
-  flex: 0 0 33.3%;
-  min-width: 33.3%;
+  flex: 0 0 33.33%;
+  min-width: 33.33%;
   box-sizing: border-box;
   border: none;
 }
@@ -540,11 +540,11 @@ footer {
   bottom: 0;
   left: 0;
   right: 0;
-  background: #d85b7f;
+  background: #d85b7f95;
   color: white;
   padding: 10px;
   text-align: center;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 /* ==========================================
