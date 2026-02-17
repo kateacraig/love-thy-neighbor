@@ -385,7 +385,7 @@ nav a:hover {
 }
 
 .gallery-item {
-  aspect-ratio: 4/3;
+  aspect-ratio: 6/5;
   background: #d85b7f;
   border-radius: 15px;
   display: flex;
@@ -393,6 +393,13 @@ nav a:hover {
   justify-content: center;
   color: white;
   font-size: 3rem;
+}
+
+.gallery-item img {
+  width: 300px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 15px;
 }
 
 /* Footer */
